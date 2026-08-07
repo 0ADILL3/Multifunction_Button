@@ -24,13 +24,18 @@ void loop() {
     Serial.println("Tombol diklik!");
   }
 
-  // 2. Cek apabila tombol ditahan (long press) selama lebih dari 2000 ms (2 detik)
+  // 2. Cek apabila tombol diklik beberapa kali (multi click)
+  if (button.clicked(3)) {
+    Serial.println("Tombol diklik 3 kali!");
+  }
+
+  // 3. Cek apabila tombol ditahan (long press) selama lebih dari 2000 ms (2 detik)
   // Ini akan dieksekusi terus-menerus selama tombol masih ditahan melewati 2 detik
   if (button.pressed(2000)) {
     Serial.println("Tombol sedang ditahan lama (> 2 detik)!");
   }
 
-  // 3. Cek apabila tombol dilepas
+  // 4. Cek apabila tombol dilepas
   if (button.released()) {
     Serial.println("Tombol dilepas!");
   }

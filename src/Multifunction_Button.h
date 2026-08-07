@@ -5,23 +5,25 @@
 class Multifunction_Button
 {
   private:
-    int8_t _button_pin = -1;
-    uint16_t _timeout = 1000;
-    uint8_t _trigger = HIGH;
-
-    bool _status = false;
+    int8_t button_pin_ = -1;
+    uint16_t timeout_ = 1000;
+    uint8_t trigger_ = HIGH;
     
-    bool _pressed_state = false;
-    bool _last_pressed_state = false;
+    bool pressed_state_ = false;
+    bool last_clicked_state_ = false;
+    bool last_released_state_ = false;
+    bool last_multiclicked_state_ = false;
+    bool last_switch_state_ = false;
     
-    unsigned long _pressed_time = 0;
-    uint8_t _clicked_times = 0;
+    unsigned long pressed_time_ = 0;
+    uint8_t clicked_times_ = 0;
+    bool switch_state_ = false;
 
-    uint16_t _debounce_delay = 50;
-    unsigned long _last_debounce_time = 0;
+    uint16_t debounce_delay_ = 50;
+    unsigned long last_debounce_time_ = 0;
 
-    unsigned long _last_time = 0;
-    unsigned long _last_repeat_time = 0;
+    unsigned long last_time_ = 0;
+    unsigned long last_repeat_time_ = 0;
   
   public:
     Multifunction_Button();
@@ -37,9 +39,15 @@ class Multifunction_Button
     // Check if button is released
     bool released();
     // Check if button is clicked in n times
-    bool clicked(uint8_t clicked_times);
+    uint8_t clicked_times();
     // Repeat button pressed in interval ms
     bool repeat(uint16_t interval);
+    // Make button act like a switch
+    bool as_switch();
+    // Get pressed time in ms
+    unsigned long get_pressed_time();
+    // Get clicked times in n times
+    uint8_t get_clicked_times();
     // Set debounce delay time in ms
     void set_debounce_delay(uint16_t debounce_delay = 50);
 };
