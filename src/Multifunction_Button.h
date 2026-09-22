@@ -41,7 +41,19 @@ public:
      * @param button_mode Mode pin (misalnya INPUT_PULLUP).
      * @param timeout Batas waktu (dalam milidetik) yang digunakan untuk mendeteksi multi click (default 1000 ms).
      */
-    void init(int8_t button_pin, uint8_t button_mode, uint16_t timeout = 1000);
+    void init(int8_t button_pin = -1, uint8_t button_mode = HIGH, uint16_t timeout = 1000);
+
+    /**
+     * @brief Memperbarui status tombol secara manual dari sumber eksternal (mode virtual).
+     * 
+     * Fungsi ini digunakan untuk menyuntikkan status tombol secara langsung ke dalam class 
+     * tanpa melalui pembacaan pin fisik maupun proses debounce. Sangat berguna ketika tombol 
+     * tidak terhubung ke pin I/O secara langsung, melainkan dikontrol melalui sumber lain 
+     * seperti komunikasi I2C, shift register, atau variabel internal dari perangkat lunak.
+     * 
+     * @param state Status input tombol (true = aktif/ditekan, false = nonaktif/dilepas).
+     */
+    void update(bool state);
 
     /**
      * @brief Memeriksa apakah tombol sedang ditekan.

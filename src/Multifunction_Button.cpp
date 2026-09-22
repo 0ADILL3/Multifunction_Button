@@ -6,31 +6,40 @@ void Multifunction_Button::init(int8_t button_pin, uint8_t button_mode, uint16_t
 {
   button_pin_ = button_pin;
   timeout_ = timeout;
-  trigger_ = (button_mode == INPUT_PULLUP) ? LOW : HIGH;
 
-  pinMode(button_pin_, button_mode);
+  if (button_pin >= 0)
+  {
+    trigger_ = (button_mode == INPUT_PULLUP) ? LOW : HIGH;
+    pinMode(button_pin_, button_mode);
+  }
 }
+
+void Multifunction_Button::update(bool state) {pressed_state_ = state;}
 
 bool Multifunction_Button::pressed()
 {
-  if (digitalRead(button_pin_) == trigger_)
-  {  
-    last_time_ = millis();
-
-    if (!pressed_state_ && (millis() - last_debounce_time_ > debounce_delay_))
-    {
-      pressed_state_ = true;
-      last_debounce_time_ = millis();
-    }
-  }
-  else
+  if (button_pin_ >= 0)
   {
-    if (pressed_state_ && (millis() - last_debounce_time_ > debounce_delay_)) 
+    if (digitalRead(button_pin_) == trigger_)
+    {  
+      last_time_ = millis();
+
+      if (!pressed_state_ && (millis() - last_debounce_time_ > debounce_delay_))
+      {
+        pressed_state_ = true;
+        last_debounce_time_ = millis();
+      }
+    }
+    else
     {
-      pressed_state_ = false;
-      last_debounce_time_ = millis();
+      if (pressed_state_ && (millis() - last_debounce_time_ > debounce_delay_)) 
+      {
+        pressed_state_ = false;
+        last_debounce_time_ = millis();
+      }
     }
   }
+  else {if (pressed_state_) {last_time_ = millis();}}
 
   return pressed_state_;
 }
