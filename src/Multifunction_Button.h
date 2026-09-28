@@ -2,6 +2,21 @@
 
 #include <Arduino.h>
 
+/**
+ * @class Multifunction_Button
+ * @brief Pustaka pengelola input tombol serbaguna dengan fitur debounce terintegrasi.
+ * 
+ * Kelas ini mempermudah interaksi tombol fisik maupun virtual secara non-blocking. 
+ * Menyediakan berbagai jenis deteksi peristiwa pembacaan tombol:
+ * 
+ * - Klik tunggal (clicked), lepas (released), dan deteksi multi-klik (clicked_times).
+ * 
+ * - Penekanan tahan lama (long press) dan pemicu berulang (repeat).
+ * 
+ * - Beroperasi sebagai sakelar toggle (as_switch).
+ * 
+ * - Mendukung input dari sumber eksternal melalui update().
+ */
 class Multifunction_Button
 {
   private:
@@ -26,7 +41,7 @@ class Multifunction_Button
     unsigned long last_time_ = 0;
     unsigned long last_repeat_time_ = 0;
   
-public:
+  public:
     /**
      * @brief Konstruktor kelas Multifunction_Button.
      */
@@ -41,7 +56,7 @@ public:
      * @param button_mode Mode pin (misalnya INPUT_PULLUP).
      * @param timeout Batas waktu (dalam milidetik) yang digunakan untuk mendeteksi multi click (default 1000 ms).
      */
-    void init(int8_t button_pin = -1, uint8_t button_mode = HIGH, uint16_t timeout = 1000);
+    void init(int8_t button_pin = -1, uint8_t button_mode = INPUT, uint16_t timeout = 1000);
 
     /**
      * @brief Memperbarui status tombol secara manual dari sumber eksternal (mode virtual).
