@@ -1,4 +1,4 @@
-# Multifunction Button Library
+# Multifunction Button
 
 A robust, non-blocking Arduino library designed to handle hardware buttons efficiently. This library solves common race-condition issues and allows you to detect multiple button states concurrently without conflicts.
 
@@ -9,6 +9,7 @@ A robust, non-blocking Arduino library designed to handle hardware buttons effic
 * **Multi-Click Detection:** Accurately detects single, double, triple, or N-clicks with a configurable timeout.
 * **Long Press:** Detect when a button is held for a specific duration.
 * **Repeat Action:** Trigger an action continuously at a set interval while the button is held down.
+* **Virtual Mode:** Inject button states manually without needing a physical GPIO pin (useful for I2C, shift registers, or internal software states).
 
 ## Installation
 1. Download this repository as a `.zip` file.
@@ -20,7 +21,8 @@ A robust, non-blocking Arduino library designed to handle hardware buttons effic
 
 | Function | Description |
 | :--- | :--- |
-| `init(pin, mode, timeout)` | Initializes the button pin, INPUT/INPUT_PULLUP mode, and multi-click timeout (default 1000ms). |
+| `init(pin, mode, timeout)` | Initializes the button pin, INPUT/INPUT_PULLUP mode, and multi-click timeout (default 1000ms). Set pin to `-1` for Virtual Mode. |
+| `update(state)` | Manually updates the button state (`true` for pressed, `false` for released) when using Virtual Mode without physical pins. |
 | `clicked()` | Returns `true` once when the button is pressed down (Edge detection). |
 | `released()` | Returns `true` once when the button is released (Edge detection). |
 | `clicked_times()` | Evaluates and returns the total number of clicks after the timeout has passed. Resets automatically. |
@@ -29,4 +31,4 @@ A robust, non-blocking Arduino library designed to handle hardware buttons effic
 | `as_switch()` | Toggles and returns `true` or `false` on every click. Acts like a push-on/push-off switch. |
 | `get_pressed_time()` | Return how long button is pressed in ms. |
 | `get_clicked_times()` | Return how many clicks in n times. |
-| `set_debounce_delay(uint16_t debounce_delay = 50)` | Change debounce delay (default 50 ms). |
+| `set_debounce_delay(debounce_delay)` | Change debounce delay (default 50 ms). |
